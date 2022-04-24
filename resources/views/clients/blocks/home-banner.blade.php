@@ -13,8 +13,8 @@
 
         <div class="carousel-inner">
             @foreach ($slide as $key => $item)
-                <div class="carousel-item {{$key==0 ? 'active' : null}}" data-src="{{$item->thumb}}">
-                    <img class="d-block w-100" src="{{$item->thumb}}">
+                <div class="carousel-item {{$key==0 ? 'active' : null}}" data-src="{{route('home').$item->thumb}}">
+                    <img class="d-block w-100" src="{{route('home').$item->thumb}}">
                 </div>
             @endforeach
         </div>

@@ -11,6 +11,7 @@ use App\Models\Product_group;
 use App\Models\Product_type;
 use App\Models\Categories;
 use App\Models\Slide;
+use App\Models\Content;
 
 class HomeController extends Controller
 {
@@ -21,6 +22,7 @@ class HomeController extends Controller
     private $product_type;
     private $categories;
     private $slide;
+    private $content;
 
     public function __construct(){
         $this->config = new Configsite();
@@ -30,6 +32,7 @@ class HomeController extends Controller
         $this->product_type = new Product_type();
         $this->categories = new Categories();
         $this->slide = new Slide();
+        $this->content = new Content();
     }
 
     public function index(Request $request){
@@ -46,6 +49,14 @@ class HomeController extends Controller
         $categories = $this->categories->get();
         $slide = $this->slide->getAll();
 
-        return view('clients.home', compact('web_config','menu_top','product_group_all','product_type_all','categories','slide','product_all','product_sale'));
+        $arr_product_group = array();
+        foreach ($product_all as $key => $value) {
+            $group_id = $value->group_id;
+            $arr_product_group[$group_id][] = $value;
+        }
+
+        $content_hot = $this->content->getHot();
+
+        return view('clients.home', compact('content_hot','web_config','menu_top','product_group_all','product_type_all','categories','slide','product_all','product_sale','arr_product_group'));
     }
 }

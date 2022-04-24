@@ -15,7 +15,7 @@ class Product extends Model
     public function getAll(){
         $data = DB::table($this->table)
         ->where('isactive', 1)
-        ->orderBy('order', 'ASC')
+        ->orderBy('cdate', 'DESC')
         ->get();
 
         return $data;
